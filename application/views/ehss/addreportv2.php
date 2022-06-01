@@ -1,4 +1,9 @@
-<head><title>Reports | EHSS</title></head>
+<head><title>Reports | EHSS</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css"/>	
+</head>
+	
 <style>
 .page-content {
 font-family:"Century Gothic";
@@ -196,12 +201,12 @@ color:#219ebc;
 												<input type="radio" name="radio_css_inline" id="cssRadio2" checked />
 												<label for="cssRadio2">No</label>												
 											</div> -->
-											<input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No">
+											<input type="checkbox" class="make-switch"  id="is-material-spill"  data-on-text="Yes" data-off-text="No"  >
 										</td>
 									</tr>
 
 									
-									<tr>
+									<tr class="material-spilled hide" >
 										<td><label class="control-label">Material Spilled</label></td>
 										<td>
 											<div class="input-group">
@@ -212,7 +217,7 @@ color:#219ebc;
 											</div>
 										</td>
 									</tr>
-									<tr>
+									<tr  class="material-spilled hide" >
 										<td><label class="control-label">Amount Spilled</label></td>
 										<td>
 											<div class="input-group">
@@ -223,7 +228,7 @@ color:#219ebc;
 											</div>
 										</td>
 									</tr>
-									<tr>
+									<tr  class="material-spilled hide">
 										<td><label class="control-label">Any injuries related to the Spill</label></td>
 										<td>
 											<div class="input-group">
@@ -490,16 +495,26 @@ color:#219ebc;
 </div>
 <!-- MODALS END -->
 
-<script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 function open_addRequest() {
 	$("#addRequest").modal();
 }
 $(document).ready(function(){
+	$("#is-material-spill").change(function(){
+		let checkIfChecked = $(this).is(':checked');
+
+		if(checkIfChecked){			
+			$(".material-spilled").removeClass('hide');
+		}else{
+			$(".material-spilled").addClass('hide');
+		}
+	})
+
+
 	$('#load-table').DataTable({
 		ajax:'<?php echo base_url();?>' + 'ehss/addreportv2/load_reports',
-		responsive:true,	
-		
+		responsive:true,			
 		columns:[{data:'report_code',title:'Report Code'},
 			
 				{data:'report_date',title:'Date Created'},
@@ -627,6 +642,7 @@ $(document).ready(function(){
 function open_addReport() {
 	$("#addReport").modal();
 }
+
 
 </script>
 
