@@ -1,7 +1,8 @@
 <head><title>ReportValidation | EHSS</title></head>
 <style>
-.page-bar, .page-title, .edit-text{
-font-family:"Century Gothic"
+.page-content {
+font-family:"Century Gothic";
+color: "219ebc";
 },
 
 
@@ -10,7 +11,7 @@ font-family:"Century Gothic"
 	<div class="page-content-wrapper">
 		<div class="page-content">
 			<!-- BEGIN PAGE HEADER-->
-			<h3 class="page-title">
+			<h3 class="page-title" style="font-family:Century Gothic">
 			Report Validation
 			</h3>
 			<div class="page-bar">
@@ -22,7 +23,7 @@ font-family:"Century Gothic"
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<i class="icon-drawer"></i>
+						<i class="fa fa-edit"></i>
 						<a href="#">Report Validation</a>
 						<i class="fa fa-angle-right"></i>
 					</li>

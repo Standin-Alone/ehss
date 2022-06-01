@@ -12,7 +12,7 @@ class reportvalidation extends CI_Controller{
       $data['menu'] = "report_validation";
       
   
-      $this->load->view('template/header', $data);
+      $this->load->view('template/headerlea', $data);
       $this->load->view('ehss/reportvalidation', $data);
       $this->load->view('template/footer');
     }
@@ -21,7 +21,7 @@ class reportvalidation extends CI_Controller{
       $data['gmenu'] = "";
       $data['menu'] = "";
   
-      $this->load->view('template/header', $data);
+      $this->load->view('template/headerlea', $data);
       $this->load->view('ehss/manage');
       $this->load->view('template/footer');
     }

@@ -1,10 +1,9 @@
-<head><title>Reports | EHSS</title></head>
+<head><title>Profile | EHSS</title></head>
 <style>
 .page-content {
 font-family:"Century Gothic";
 color: "219ebc";
-},
-
+}
 
 </style>
 	<!-- BEGIN CONTENT -->
@@ -12,19 +11,19 @@ color: "219ebc";
 		<div class="page-content">
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title" style="font-family:Century Gothic">
-			Review Reports 
+			EHSS Dashboard
 			</h3>
 			<div class="page-bar">
 				<ul class="page-breadcrumb">
 					<li><a href="javascript:history.back();"><i class="btn-xl fa fa-arrow-circle-o-left"></i></a></li>
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="<?php echo base_url('addreport');?>">Home</a>
+						<a href="<?php echo base_url('dashboard');?>">Home</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<i class="fa fa-check-square-o"></i>
-						<a href="#">Review Reports</a>
+						<i class="fa fa-bar-chart-o"></i>
+						<a href="#">Dashboard</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 				</ul>
@@ -42,26 +41,51 @@ color: "219ebc";
 				<div class="portlet-title">
 					<div class="caption">
 						<i class="fa fa-reorder font-red-sunglo"></i>
-						<span class="caption-subject font-red-sunglo bold uppercase">List of Reports that are for Review</span>
+						<span class="caption-subject font-red-sunglo bold uppercase">List of Requests</span>
 					</div>
-					<!-- <div class="actions">
+					<div class="actions">
 						<?php if($this->session->userdata("ess_role") == "end-user") { // if ( !in_array($this->session->userdata("empid"), array(257) ) ) { ?>
-						<a href="javascript:open_addRequest();" class="btn btn-lg btn-primary" style="padding: 8px 13px; margin: -5px -8px !important;">Add New Report</a>
+						<a href="javascript:open_addRequest();" class="btn btn-lg btn-primary" style="padding: 8px 13px; margin: -5px -8px !important;">New Request</a>
 						<?php } ?>
-					</div> -->
+					</div>
 				</div>
 				<div class="portlet-body">
-					<table class="table table-hover datatables" id="load-table" width="100%">
+					<table class="table table-striped table-bordered datatables" id="table" width="100%">
 						<thead>
-						
+							<tr>
+								<th>Reference Number</th>
+								<th>Date Requested</th>
+								<th>Requested by</th>
+								<th>Request Type</th>
+								<th>Description</th>
+								<th>Status</th>
+								<th width="100px">Action</th>
+							</tr>
 						</thead>
 						<tbody>
-							
+							<tr>
+								<td>EHS-22-001</td>
+								<td>April 4, 2022</td>
+								<td>Juan Dela Cruz</td>
+								<td>Emergency</td>
+								<td>Sample Details of the emergency</td>
+								<td><button class="btn btn-circle btn-xs xs-11 blue-madison" onclick=""> Pending </button></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>EHS-22-002</td>
+								<td>April 7, 2022</td>
+								<td>Juana Dela Cruz</td>
+								<td></td>
+								<td>Sample Details of the emergency</td>
+								<td><button class="btn btn-circle btn-xs xs-11 blue-madison" onclick=""> Pending </button></td>
+								<td></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<!-- END EXAMPLE TABLE PORTLET-->	
+			<!-- END EXAMPLE TABLE PORTLET-->
 
       <!-- Content End -->
     </div>
@@ -70,14 +94,18 @@ color: "219ebc";
 </div>
 <!-- END CONTAINER -->
 
-<!-- View Report Modal -->
-<div class="modal fade" id="viewReport" tabindex="-1" role="dialog" aria-hidden="true">
+
+<!-- MODALS START -->
+
+<!-- Create ESS Job Order Request Modal End -->
+<div class="modal fade" id="addRequest" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<form action="#" method="" id="viewRequest_Form" enctype="multipart/form-data">
+			<form action="#" method="" id="addRequest_Form" enctype="multipart/form-data">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title"><span id="addRequest_Label">View Report</span></h4>				
+				<h4 class="modal-title"><span id="addRequest_Label">Create New Request</span></h4>
+				<input type="text" id="addRequest_id" name="addRequest_id" value="0">
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -103,7 +131,7 @@ color: "219ebc";
 										</td>
 									</tr>
 
-									<!-- <tr>
+									<tr>
 										<td><label class="control-label">Date of Incident</label></td>
 										<td>
 											<div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
@@ -113,16 +141,36 @@ color: "219ebc";
 												<input type="text" id="target_date" name="target_date" class="form-control" required="required" value="<?=Date('Y-m-d');?>">
 											</div>
 										</td>
-									</tr> -->
+									</tr>
 
 									<tr>
-										<td><label class="control-label">Location</label></td>
+										<td><label class="control-label">Location of Incident</label></td>
 										<td><input id="location" name="location" class="form-control input-circle" placeholder="enter location of incident"></td>
 									</tr>
 
 									<tr>
-										<td><label class="control-label">Details</label></td>
+										<td><label class="control-label">Items Involved</label></td>
+										<td><input id="location" name="location" class="form-control input-circle" placeholder="Materials"></td>
+									</tr>
+
+									<tr>
+										<td><label class="control-label">Persons Involved</label></td>
+										<td><textarea id="description" name="description" class="form-control input-circle" placeholder="enter persons involved"></textarea></td>
+									</tr>
+
+									<tr>
+										<td><label class="control-label">Enter Details</label></td>
 										<td><textarea id="description" name="description" class="form-control input-circle" placeholder="enter details"></textarea></td>
+									</tr>
+
+									<tr>
+										<td><label class="control-label">Contact Number</label></td>
+										<td><input id="contact_number" name="contact_number" class="form-control input-circle" placeholder="enter mobile number"></td>
+									</tr>
+
+									<tr>
+										<td><label class="control-label">Persons Injured</label></td>
+										<td><input id="location" name="location" class="form-control input-circle" placeholder=""></td>
 									</tr>
 
 									<tr>
@@ -131,51 +179,35 @@ color: "219ebc";
 											<input class="form-control form-control-sm" type="file" name="attachment[]" id="attachment" multiple>
 										</td>
 									</tr>
+
 								</table>
+
 							</div>
 						</div>
 					</div>
+
 				</div>
+
 			</div><!-- /modal-body -->
 			<div class="modal-footer">
 				<div class="btn-group btn-group-circle btn-group-solid pull-right" role="group">
 					<button type="button" id="closeBtn" class="btn grey" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-					<!-- <button type="submit" id="saveBtn" class="btn blue"><i class="fa fa-save"></i> Save</button> -->
+					<button type="submit" id="saveBtn" class="btn blue"><i class="fa fa-save"></i> Save</button>
 				</div>
 			</div>
 		</div>
 		</form>
-
-		
 		<!-- /.modal-content -->
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-<!-- MODALS END -->
 
-
-<script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-function open_viewReport() {
-	$("#viewReport").modal();
+function open_addRequest() {
+	$("#addRequest").modal();
 }
-$(document).ready(function(){
-	$('#load-table').DataTable({
-		ajax:'<?php echo base_url();?>' + 'ehss/reviewreport/review_report',
-		responsive:true,	
-		
-		columns:[{data:'report_code',title:'Report Code'},
-				{data:'report_date',title:'Report Date'},
-				{data:'location',title:'Location'},
-				{data:'details',title:'Details'},
-				{data:'status',title:'Status'},
-				{data:'report_id',title:'Action', render:function(data,type,row){
-					return('<button class="btn btn-warning btn-block" data-toggle="modal" data-target="#viewReport"><i class="fa fa-eye"/>View</button>')
-				}}],
-		order: [[ 1, "desc" ]]	
-	})
-})
-
-
-
 </script>
+<!-- Create ESS Job Order Request Modal End -->
+
+
+<!-- MODALS END -->

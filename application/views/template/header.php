@@ -263,7 +263,7 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 	    <li class="portal"><a href="https://admin.services.pnri.dost.gov.ph/helpdesk" target="__blank">IT Helpdesk</a></li>
 	    <li class="portal"><a href="https://services.pnri.dost.gov.ph/portal/HealthCheck" target="__blank">DOHC</a></li>
 	    <li class="portal"><a href="http://library.intranet.pnri/" target="__blank">Library</a></li>
-		<li class="portal"><a href="http://localhost/infosys-master/ehss">EHSS</a></li>
+		<li class="portal"><a href=<?php echo base_url('ehss/addreportv2');?>>EHSS</a></li>
 		<li class="portal hamb pull-right" style="padding: 12px;color: white;" onclick="$('.page-sidebar').toggleClass('collapse')">
 			<i class="fa fa-list"></i>
 		</li>
@@ -567,7 +567,7 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 							</a>
 							<ul class="sub-menu" style="display: block;">
 								<li class="<?php if ($menu == 'add_report') echo  'start active open';?> limenu">
-									<a href="<?php echo base_url('ehss/addreport');?>">
+									<a href="<?php echo base_url('ehss/addreportv2');?>">
 									Add Report</a>
 								</li>
 								<li class="<?php if ($menu == 'report_report') echo  'start active open';?> limenu">

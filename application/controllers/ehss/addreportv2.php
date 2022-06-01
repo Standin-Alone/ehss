@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class reviewreport extends CI_Controller {
+class addreportv2 extends CI_Controller {
   public function __construct(){
       parent::__construct();
     if($this->session->userdata('userid') == null || $this->session->userdata('userid')=='')
@@ -9,10 +9,10 @@ class reviewreport extends CI_Controller {
 
   public function index(){
     $data['gmenu'] = "ehss";
-    $data['menu'] = "review_report";
+    $data['menu'] = "add_report";
 
     $this->load->view('template/headerlea', $data);
-    $this->load->view('ehss/reviewreport', $data);
+    $this->load->view('ehss/addreportv2', $data);
     $this->load->view('template/footer');
   }
 
@@ -33,12 +33,8 @@ class reviewreport extends CI_Controller {
      
   }
 
-  public function review_report(){
-    $rreports = $this->EhssModel->review_report();
-    
-    
-    return $this->output->set_content_type('application/json')->set_output($rreports);
-     
+  public function email_template(){
+    $this->load->view('ehss/emailtemplate');
   }
 
   public function hazard(){

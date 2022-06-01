@@ -91,12 +91,15 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/global/scripts/jquery.ajaxfileupload.js"></script>
 <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.min.js"></script> -->
 
-
 <script src="<?php echo base_url('assets/roles.js');?>"></script>
 <!-- END PAGE LEVEL STYLES -->
 <link rel="shortcut icon" href="<?php echo base_url();?>assets/fav.png"/>
 
 <style type="text/css">
+	nav li.active{
+  background: #183558;
+}
+
 	ol li {
 		/*color: red!important;*/
 	}
@@ -127,12 +130,11 @@
 	    list-style-type: none;
 	    margin: auto;
 	    padding: 0;
-	    font-family: "Century Gothic";
+	    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 	}
 	nav.portal {
 	    width: 100%;
-		/* background-color: #EDDDD4; */
-	    background-color: #219ebc;
+	    background-color: #214878;
 	}
 	li.portal {
     float: left;
@@ -147,7 +149,7 @@
     text-decoration: none;
 }
  li.portal:hover, .subnav:hover .subnavbtn {
-    background-color: #023958;
+    background-color: #183558;
   }
   .dropdown-menu a{
   	width: 100%;
@@ -165,7 +167,27 @@
 	.hamb{
 		display:none;
 	}
-@media only screen and (max-width: 900px) {
+
+	.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a, .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar .page-sidebar-menu > li.active.open > a{
+		background: #006dcc;
+		border-bottom: 1px solid #1f262d;
+    border-top: 1px solid #37414b;
+	}
+	.page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li.open > a {
+    color: #d9d9d9;
+    border-bottom: 1px solid #1f262d;
+    border-top: 1px solid #37414b;
+}
+	.page-sidebar .page-sidebar-menu > li.open > a{
+		background:#2e363f;
+	}
+	.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover, .page-sidebar {
+    background-color: #2E363F;
+}
+	.page-sidebar .page-sidebar-menu > li > a {
+    	border-top: 1px solid #37414b;border-bottom: 1px solid #1f262d;
+	}
+@media only screen and (max-width: 992px) {
   li.portal a, .dropbtn {
     font-size: 11px;
     padding: 14px 8px
@@ -178,6 +200,29 @@
 	}
 }
 </style>
+
+<style type="text/css">
+	#hbdmodal {
+	      max-width: 800px;
+	      margin: 30px auto;
+	 }
+
+	#hbdmodalbody {
+	  position:relative;
+	  padding:0px;
+	}
+	#hbdclose {
+	  position:absolute;
+	  right:-30px;
+	  top:0;
+	  z-index:999;
+	  font-size:2rem;
+	  font-weight: normal;
+	  color:#fff;
+	  opacity:1;
+	}
+</style>
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY --><!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
@@ -191,144 +236,59 @@
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <!-- <body class="page-header-fixed page-quick-sidebar-over-content"> -->
 
-<style>
-.rainbow-text{
-font-family:"Stencil"
-},
-
-</style>
-
 <body oncontextmenu="return false" class="page-quick-sidebar-over-content page-header-fixed page-sidebar-fixed page-footer-fixed page-sidebar-closed-hide-logo">
 <!-- BEGIN HEADER -->
-
+   <?php
+$uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+?>
 <nav class="portal" style="position: fixed;top: 0;z-index: 9;">
     <ul class="portal">
-      
-		<li class="portal"><img src="<?php echo base_url('/assets/login/logo.png')?>" width="30" height="30" style="margin-left: 10px; ">
-		<a href="#" class="rainbow-text"><strong>EHSSMS</strong></a></li>
-		<style type="text/css">
-/* General styling of the page. */
-/* Sets a background color, font-size etc. */
-/* body {
-  background-color: #EDDDD4;
-} */
-
-h1 {
-  font-family: "Arial Black";
-  font-weight: 750;
-  font-size: 3em;
-  width: 6em;
-  line-height: 0.9em;
-  margin-left: auto;
-  margin-right: auto;
-  /* margin-top: 1.5em; */
-  margin-top: calc(10vh - 1em);
-}
 
 
-/* Style the rainbow text element. */
-.rainbow-text {
-  /* Create a conic gradient. */
-  /* Double percentages to avoid blur (#000 10%, #fff 10%, #fff 20%, ...). */
-  font-family: "Arial Black";
-  font-weight: 900;
-  font-size: 3em;
-  width: 6em;
-  line-height: 0.9em;
-  margin-left: 1px;
-  margin-right: auto;
-  /* margin-top: 1.5em; */
-  margin-top: calc(3vh - 1em);
-  background: #CA4246;
-  background-color: #CA4246;
-  background: conic-gradient(
-    #ffb703 16.666%, 
-    #ffb703 16.666%, 
-    #E16541 33.333%, 
-    #F18F43 33.333%, 
-    #F18F43 50%, 
-    #8B9862 50%, 
-    #ffb703 66.666%, 
-    #476098 66.666%, /*blue*/
-    #476098 83.333%, 
-    #e0fbfc 83.333%); /*white*/
-  
-  /* Set thee background size and repeat properties. */
-  background-size: 57%;
-  background-repeat: repeat;
-  
-  /* Use the text as a mask for the background. */
-  /* This will show the gradient as a text color rather than element bg. */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; 
-  
-  /* Animate the text when loading the element. */
-  /* This animates it on page load and when hovering out. */
-  animation: rainbow-text-animation-rev 0.5s ease forwards;
-
-  cursor: pointer;
-}
-
-/* Add animation on hover. */
-.rainbow-text:hover {
-  animation: rainbow-text-animation 0.5s ease forwards;
-}
-
-/* Move the background and make it larger. */
-/* Animation shown when hovering over the text. */
-@keyframes rainbow-text-animation {
-  0% {
-    background-size: 57%;
-    background-position: 0 0;
-  }
-  20% {
-    background-size: 57%;
-    background-position: 0 1em;
-  }
-  100% {
-    background-size: 300%;
-    background-position: -9em 1em;
-  }
-}
-
-/* Move the background and make it smaller. */
-/* Animation shown when entering the page and after the hover animation. */
-@keyframes rainbow-text-animation-rev {
-  0% {
-    background-size: 300%;
-    background-position: -9em 1em;
-  }
-  20% {
-    background-size: 57%;
-    background-position: 0 1em;
-  }
-  100% {
-    background-size: 57%;
-    background-position: 0 0;
-  }
-}
-</style> 
-	    <!-- <li class="portal"><a href="https://admin.services.pnri.dost.gov.ph/pps">PPIS</a></li>
-	    <li class="portal"><a href="http://dtms.intranet.pnri/" target="__blank">DTMS</a></li>
-	    <li class="portal"><a href="https://outlook.office.com/mail/inbox" target="__blank">Outlook</a></li>
-	    <li class="portal"><a href="http://helpdesk.intranet.pnri/" target="__blank">IT Helpdesk</a></li> -->
+		<li class="portal  <?php echo ($uriSegments[1] == 'infosys'?'active':'');?>" style="width: 235px;"><img src="<?php echo base_url('/assets/login/logo.png')?>" width="30" height="30" style="margin-left: 10px;"><a href="#">EHSSMS</a></li>
+		
+		
+		<?php
+			// if($this->session->userdata('section') == 21 || $this->session->userdata('section') == 44){
+			echo '<li class="portal"><a href="https://admin.services.pnri.dost.gov.ph/intranet/">Announcements</a></li>';
+			// }
+      	?>
+		<?php
+			if($this->session->userdata('section') == 31 || $this->session->userdata('section') == 44){
+			echo '<li class="portal '. ($uriSegments[1] == 'iss'?'active':'') .'"><a href="https://admin.services.pnri.dost.gov.ph/iss/">ISS</a></li>';
+			}
+      	?>
+	    <li class="portal"><a href="https://admin.services.pnri.dost.gov.ph/pps">PPIS</a></li>
+			<li class="portal"><a href="http://admin.services.pnri.dost.gov.ph/caat" target="__blank">CAAT</a></li>
+	    <li class="portal"><a href="http://admin.services.pnri.dost.gov.ph/dtms" target="__blank">DTMS</a></li>
+	    <!-- <li class="portal"><a href="https://outlook.office.com/mail/inbox" target="__blank">Outlook</a></li> -->
+	    <li class="portal"><a href="https://admin.services.pnri.dost.gov.ph/helpdesk" target="__blank">IT Helpdesk</a></li>
+	    <li class="portal"><a href="https://services.pnri.dost.gov.ph/portal/HealthCheck" target="__blank">DOHC</a></li>
+	    <li class="portal"><a href="http://library.intranet.pnri/" target="__blank">Library</a></li>
+		<li class="portal"><a href=<?php echo base_url('ehss/addreportv2');?>>EHSS</a></li>
 		<li class="portal hamb pull-right" style="padding: 12px;color: white;" onclick="$('.page-sidebar').toggleClass('collapse')">
 			<i class="fa fa-list"></i>
 		</li>
 		<li class="portal pull-right dropdown dropdown-user">
-			<a href="#" class="dropdown-toggle"   data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="font-weight: 400; font-weight:bold;">Hi, <?php echo ucwords(strtolower($this->session->userdata('name'))); ?>
+			<a href="#" class="dropdown-toggle"   data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="font-weight: 400;font-size: 9.5pt;line-height: 16pt;">Hi, <?php echo ucwords(strtolower($this->session->userdata('name'))) . ' of ' . $this->session->userdata('secCode'); ?>
 			<i class="fa fa-angle-down"></i></a>
-<style>
-.dropdown-menu{
-font-family:"Century Gothic"
-},
-</style>
+
 		<ul class="dropdown-menu">
 	        			<li class="username">
 	                        <a href="#">
-	        				    <i class="icon-user"></i><small>Emp #: <span><?php echo $this->session->userdata('empNum');?></span></small>
+	        				    <i class="fa fa-user"></i><small> Emp #: <span><?php echo $this->session->userdata('empNum');?></span></small>
 	                        </a>
 	        			</li>
+						<li>
+							<a href="<?php echo base_url('assets/peisuserguidev2.pdf');?>" target="_blank">
+							<i class="fa fa-book"></i> User's Manual
+							</a>
+						</li>
+						<li>
+							<a data-toggle="modal" href="#mfeeds" onClick="$('#uFeedback').focus()">
+							<i class="fa fa-comments"></i> Feedback
+							</a>
+						</li>
 						<li class="divider"> </li>
 						<li>
 							<a data-toggle="modal" href="#mchangepass" onclick="$('#guid').val('<?php echo $this->session->userdata('userid');?>');$('#gname').val('<?php echo $this->session->userdata('username');?>')">
@@ -342,11 +302,11 @@ font-family:"Century Gothic"
 					</ul>
 
 				</li>
+		<!-- <li class="portal pull-right <?php if(isset($uriSegments[3])) echo ($uriSegments[3] == 'dtr'?'active':'')?>"><a href="<?php echo base_url('hr/dtr')?>"><i class="icon-calendar"></i></a></li>
+		<li class="portal pull-right <?php if(isset($uriSegments[3])) echo ($uriSegments[3] == 'eprint'?'active':'')?>"><a href="<?php echo base_url('cash/eprint')?>"><i class="fa fa-envelope-o"></i></a></li> -->
 
 	</ul>
   </nav>
-
-  
 
 <!-- <li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -355,7 +315,7 @@ font-family:"Century Gothic"
 					Hi,  </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
-					
+
 				</li> -->
 <!-- LOGOUT /.modal -->
 <div id="mlogout" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
@@ -453,56 +413,822 @@ font-family:"Century Gothic"
 	<!-- /.modal-dialog -->
 </div>
 <!-- LOGOUT /.modal -->
+<div id="mfeeds" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button> -->
+				<h4 class="modal-title">Feedback Form</h4>
+			</div>
+			<div class="modal-body">
+				<label>We'd be happy to hear from you:</label>
+				<textarea class="form-control" rows="10" cols="100" id="uFeedback"></textarea>
+			</div>
+			<div class="modal-footer">
+				<div id="gfootF">
+					<a class="btn green hidden" id="gbtnsubmitF" onclick="gbtnsubmitF()">
+					<i class="icon-check"></i> Save </a>
+
+					<a class="btn blue cpClose" class="btn default" data-dismiss="modal" onclick="$('#uFeedback').val('')">
+					<i class="icon-close"></i> Close </a>
+				</div>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 
 <!-- BEGIN CONTAINER -->
-<style>
-.page-container{
-font-family:"Century Gothic"
-},
-</style>
 <div class="page-container">
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-		<div class="page-sidebar navbar-collapse" >
+		<div class="page-sidebar navbar-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->
-			
-			<ul class="page-sidebar-menu"  style= "background-color:#DC4CBAs" data-auto-scroll="true" data-slide-speed="200">
-				<li class="hidden start <?php if ($menu == 'addreport') echo  ' active open';?> mmenu">
-					<a href="<?php echo base_url('addreport/');?>">
-					<i class="icon-home"></i>
-					<span class="title">Home</span>
-					</a>
-				</li>
-					<li class="<?php if ($gmenu == 'main' || $gmenu == 'ehss') echo  ' open';?> mmenu" style= "background-color:#242a30">
-						<a class='text-center' href="javascript:;"><font style="color:#00ACAC; font-weight:bold;">MAIN MENU</font></a>
+
+			<ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
+					<li class="<?php if ($gmenu == 'main' || $gmenu == 'payment') echo  ' open';?> mmenu">
+						<a href="javascript:;"><font style="color:#56de68; font-weight: bold;">Main Menu</font></a>
 					</li>
-						<li class="<?php if ($gmenu == 'ehss') echo  ' active ';?> open">
+					<li class="start <?php if ($menu == 'dashboard') echo  ' active open';?> mmenu">
+						<a href="<?php echo base_url('ehss/dashboard/');?>">
+						<i class="icon-home"></i>
+						<span class="title">Dashboard</span>
+						</a>
+					</li>
+					<li class="<?php if ($gmenu == 'addreport') echo  ' active ';?> open">
 							<a href="javascript:;">
-							<i class="icon-calendar"></i> <b>Report Management </b> <span class="arrow"></span>
+							<i class="icon-calendar"></i> Report Management <span class="arrow"></span>
 							</a>
 							<ul class="sub-menu" style="display: block;">
 								<li class="<?php if ($menu == 'add_report') echo  'start active open';?> limenu">
-									<a style= "color:#ffffff" href="<?php echo base_url('ehss/addreport');?>">
+									<a href="<?php echo base_url('ehss/addreportv2');?>">
 									Add Report</a>
 								</li>
 								<li class="<?php if ($menu == 'report_report') echo  'start active open';?> limenu">
-									<a style= "color:#ffffff" href="<?php echo base_url('ehss/reviewreport');?>">
-									Review Reports</a>
+									<a href="<?php echo base_url('ehss/reviewreport');?>">
+									<span class="title">Review Report</span>
+									</a>
 								</li>
-                                <li class="<?php if ($menu == 'report_validation') echo  'start active open';?> limenu">
-									<a style= "color:#ffffff" href="<?php echo base_url('ehss/reportvalidation');?>">
-									Report Validation</a>
+								<li class="<?php if ($menu == 'report_validation') echo  'start active open';?> limenu">
+									<a href="<?php echo base_url('ehss/reportvalidation');?>">
+									<span class="title">Report Validation</span>
+									</a>
 								</li>
+								
 							</ul>
-						</li>
-						
+
 			</ul>
 		</div>
 		<audio id="notif_audio"><source src="<?php echo base_url('assets/sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('assets/sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('assets/sounds/notify.wav');?>" type="audio/wav"></audio>
 	</div>
 	<!-- END SIDEBAR -->
 
+	
+
+<div hidden>
+  <button type="button" id="hbd1" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/I2sFUeC8v0s" data-target="#myModal"></button>
+  <button type="button" id="hbd2" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/NCzgzO1y7yQ" data-target="#myModal"></button>
+  <button type="button" id="hbd3" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/evohmu6MTic" data-target="#myModal"></button>
+  <button type="button" id="hbd4" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/8UE6gzNuUKo" data-target="#myModal"></button>
+  <button type="button" id="hbd5" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/cPv5CoWABMQ" data-target="#myModal"></button>
+  <button type="button" id="hbd6" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/7KPfOVw3JwY" data-target="#myModal"></button>
+  <button type="button" id="hbd0" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/1CQ1NzP0zhU" data-target="#myModal"></button>
+</div>
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div id="hbdmodal" class="modal-dialog modal-full" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Happy birthday, <font color="red"><b><?php echo $this->session->userdata('firstname'); ?></b></font>!</h4>
+			</div>
+			<div id="hbdmodalbody" class="modal-body">
+			<div class="embed-responsive embed-responsive-16by9">
+	        <iframe class="embed-responsive-item" src="" id="video" allow="autoplay"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script> -->
 
+<script type="text/javascript">
+var allowArrowKeys = 1;
+var disabledEmpStatus = ["11", "12", "14", "17", 11, 12, 14, 17];
+var myroles = <?php echo json_encode($this->session->userdata('uroles'));?>;
+console.log("myroles: ", myroles)
+function checkNotSec(){
+	$('#mchangepass').modal('hide');
+	if(<?php echo $this->session->userdata('notsec');?>){
+		$('#mchangepass').modal('show');
+		$('.cpClose').addClass('hidden');
+	}else{
+		$('.cpClose').removeClass('hidden');
+	}
+}
+function removeMe(){
+	if(myroles.includes("1"))
+		console.log(1)
+	if(myroles.includes("3")){
+		$(".hrmo").removeClass("hidden hidme revme divabled")
+		$(".HRreports").removeClass("hidden hidme revme divabled")
+	}
+	if(myroles.includes("9"))
+		$(".dtradmin").removeClass("hidden hidme revme")
+	if(myroles.includes("23"))
+		console.log(23)
+	if(myroles.includes("26"))
+		$(".accountant").removeClass("hidden hidme revme")
+	if(myroles.includes("25"))
+		$(".cashier").removeClass("hidden hidme revme")
+	if(myroles.includes("27"))
+		console.log(27)
+	if(myroles.includes("34"))//unit head
+		$(".sechead").removeClass("hidden hidme revme")
+	if(myroles.includes("7"))//div chief
+		$(".divchief").removeClass("hidden hidme revme")
+	if(myroles.includes("35"))//deputy
+		$(".deputy").removeClass("hidden hidme revme")
+	if(myroles.includes("4"))
+		console.log(4)
+	$(".hidme").hide()
+	$(".revme").remove()
+}
+removeMe()
+
+function getDivSec() {
+    $.ajax ({  type:"GET", async: true, dataType: 'json', cache: false,
+      url:"<?=site_url('hr/dtr/getDivSec');?>",
+      success: function(data) {
+        $("#ftrDivision").html(data);
+        $('#ftrDivision').val($('#ftrDivision option:first').val())
+        $('select').select2();
+      },
+      error: function(data){console.log("We encountered a problem!")}
+  });
+}
+
+function ggetDTRDates() {
+	$.ajax ({  type:"POST", async: true, dataType: 'json', cache: false,
+      url:"<?=site_url('hr/dtr/ggetDTRDates');?>",
+      success: function(data) {
+		$("#ftrDTRDates").html(data);
+		$('#ftrDTRDates').val($('#ftrDTRDates option:first').val())
+		$('select').select2();
+      },
+      error: function(data){console.log("We encountered a problem!")}
+  });
+}
+
+function ggetEmployees(sel) {
+	$.ajax ({  type:"POST", async: true, dataType: 'json', cache: false,
+      url:"<?=site_url('hr/employee/getEmployees');?>",
+      success: function(data) {
+		$("#ftrEmployee").html(data);
+		if(sel)
+			$("#ftrEmployee").val(sel).trigger("change").select2();
+		else
+			$('#ftrEmployee').val($('#ftrEmployee option:first').val()).select2();
+		updateEmployee()
+      },
+      error: function(data){console.log("We encountered a problem!")},
+      complete: function(data){
+      	if("<?php echo $menu;?>" == "dtr"){
+			if(!myroles.includes("9"))
+				$("body").disableSelection();
+    		var aroles = ['9', '7', '34'];
+    		if (aroles.some(i => myroles.includes(i))){
+    			$("#ftrEmployee").html("<option value='0'>-----------------------------------</option>"+$("#ftrEmployee").html())
+				getDivSec()
+    		}
+      	}
+      }
+  });
+}
+
+function ggetPlantilla() {
+	$.ajax ({  type:"POST", async: true, dataType: 'json', cache: false,
+      url:"<?=site_url('hr/employee/getPlantilla');?>",
+      success: function(data) {
+		$("#plantilla").html(data);
+		$('select').select2();
+      },
+      error: function(data){console.log("We encountered a problem!")}
+  });
+}
+
+function ggetPositions() {
+	$.ajax ({  type:"POST", async: true, dataType: 'json', cache: false,
+      url:"<?=site_url('hr/employee/getPositions');?>",
+      success: function(data) {
+		$("#empPos").html(data);
+		$('select').select2();
+      },
+      error: function(data){console.log("We encountered a problem!")}
+  });
+}
+
+function ggetSections() {
+	$.ajax ({  type:"POST", async: true, dataType: 'json', cache: false,
+      url:"<?=site_url('common/getSections');?>",
+      success: function(data) {
+		$("#empSec").html(data);
+		$('#empSec').val()
+		$('select').select2();
+      },
+      error: function(data){console.log("We encountered a problem!")}
+  });
+}
+
+function ggetRoles(userid, inpt) {
+	$.ajax ({  type:"GET", async: true, dataType: 'json', cache: false, data:{userid:userid},
+      url:"<?=site_url('common/getRoles');?>",
+      success: function(data) {
+      	if(inpt){
+			$(inpt).val(data);
+			$(inpt).select2();
+			localStorage.removeItem('oUserLevel');
+			localStorage.setItem('oUserLevel', data);
+      	}
+      },
+      error: function(data){console.log("We encountered a problem!")}
+  });
+}
+
+function gclearme(frm){
+	$("#alertvalidation").hide();
+	$("#successvalidation").hide();
+	$("#infovalidation").hide();
+
+	$("#alertvalidationsubcat").hide();
+	$("#successvalidationsubcat").hide();
+	$("#infovalidationsubcat").hide();
+
+	$(frm)[0].reset();
+	$(".form-group").removeClass("has-success has-error");
+	$("i").removeClass("fa-check fa-warning");
+	$(".help-block-error").addClass("hidden");
+}
+
+function clearForms(){
+	$(".tab-pane").removeClass("divabled");
+	$("#alertvalidation").hide();
+	$("#successvalidation").hide();
+	$("#infovalidation").hide();
+	$('form').trigger("reset");;
+	$(".form-group").removeClass("has-success has-error");
+	$("i").removeClass("fa-check fa-warning");
+	$(".help-block-error").addClass("hidden");
+	$(".btnSubmit").addClass("hidden");
+	$("#btnSaveNewEmployee").removeClass("hidden");
+	$("#btnSavePersonInfo").addClass("hidden");
+	$(".btnNext").removeClass("hidden");
+
+	// $("li").prop("style", "pointer-events: none;");
+	$(".nav-tabs").prop("style", "pointer-events: none;");
+	$(".frmFilter").prop("style", "pointer-events: none;");
+	$("#empUserLevel").val("1");
+	$("#empPass").addClass("divabled").prop('placeholder', 'auto-generated');
+	$("#empUserLevel").select2();
+	// $(inpt).select2();
+	$("#empAppDate").datepicker("setDate", new Date());
+	$("#empAssDate").datepicker("setDate", new Date());
+	$("#plantilla").val("")
+	$("#empPos").val("")
+	$("#empDiv").val("")
+	$('select').select2();
+	$.uniform.update();
+	nextForm(1)
+	allowArrowKeys = 0;
+}
+
+function cancelNew(){
+	allowArrowKeys = 1;
+	$(".nav-tabs").prop("style", "");
+	$(".frmFilter").prop("style", "");
+	$(".btnNext").addClass("hidden");
+	$(".btnPrev").addClass("hidden");
+	$(".btnSubmit").removeClass("hidden");
+	$("#btnSaveNewEmployee").addClass("hidden");
+	$("#btnSavePersonInfo").removeClass("hidden");
+	$("#empPass").removeClass("divabled");
+    $("label.error, label.has-error").addClass("hidden");
+    $("input.error").prop("style", "color: black;");
+	updateEmployee()
+}
+
+function nextForm(frm){
+	$("#firstname").focus();
+	$(".btnNext").addClass("hidden");
+	$(".btnPrev").addClass("hidden");
+	switch(frm) {
+		case 1:
+			$(".tb2").removeClass("active");
+			$(".tb1").addClass("active");
+			$(".btnNext").removeClass("hidden");
+			break;
+		case 2:
+			$(".tb1").removeClass("active");
+			$(".tb2").addClass("active");
+			$(".btnPrev").removeClass("hidden");
+			break;
+		default:
+			// code block
+	}
+}
+
+function updatePass(url, acc, accname, accid){
+    $.ajax
+    ({  type:"POST",
+        async: true,
+        url: "<?php echo site_url('admin/"+url+"Acc'); ?>",
+        data: {	acc:acc, accname:accname, accid:accid},
+		dataType: 'json',
+		cache: false,
+        success: function(data)
+        {
+			$('#processvalidation').hide();
+			if(url == "new"){
+				url = "CREATED";
+				localStorage.setItem('ouid', data);
+				aCalldu({id:localStorage.getItem('ouid'), uref:$("#empUserLevel").val()});
+			}else
+				url = "UPDATED";
+
+        	if(data){
+				$('#mchangepass').modal('hide');
+				$('.modal-backdrop').remove();
+				toastr.success("USER "+url, "SUCCESS");
+        	}
+			else{
+				console.log("INFO: User was not "+url)
+    			// toastr.info("Password was not updated", "INFO");
+    			checkNotSec()
+			}
+        },
+        error: function(data)
+        {
+            toastr.error('PLEASE RELOAD THE PAGE AND TRY AGAIN.', 'OOOOOPHS! WE ENCOUNTERED A PROBLEM')
+        }
+    })
+}
+
+function aCall(a, w, t, c, i, d, u){
+    $.ajax
+    ({  type:"POST",
+        async: true,
+        url: u,
+        data: {	tbl:t, col:c, id:i, udata: d},
+		dataType: 'json',
+		cache: false,
+        success: function(data)
+        {
+			$('#processvalidation').hide();
+        	if(data[0])
+				toastr.success("SUCCESSFULLY "+a+" "+w, "SUCCESS");
+			else
+    			console.log(w+" WAS NOT "+a);
+
+        },
+        error: function(data)
+        {
+            toastr.error('PLEASE RELOAD THE PAGE AND TRY AGAIN.', 'OOOOOPHS! WE ENCOUNTERED A PROBLEM')
+        },
+        complete: function(c){
+        	if(c.status==200)
+				switch(w) {
+					case "HOLIDAYS & SUSPENSIONS":
+						$('#calendar').fullCalendar( 'refetchEvents' );
+						break;
+					case "WFH REPORT":
+						loadTables()
+						break;
+					default:
+						// code block
+				}
+        }
+    })
+}
+
+function aCallc(a, w, t, c, d, u){
+	$.ajax
+    ({  type:"POST",
+        async: true,
+        url: u,
+        data: {	tbl:t, con:c, udata: d},
+		dataType: 'json',
+		cache: false,
+        success: function(data)
+        {
+			$('#processvalidation').hide();
+        	if(data)
+				toastr.success("SUCCESSFULLY "+a+" "+w, "Success");
+			else
+    			console.log(w+" WAS NOT "+a, "INFO");
+
+        },
+        error: function(data)
+        {
+            toastr.error('PLEASE RELOAD THE PAGE AND TRY AGAIN.', 'OOOOOPHS! WE ENCOUNTERED A PROBLEM')
+        },
+    })
+}
+//delete update
+function aCalldu(d){
+	$.ajax
+    ({  type:"POST",
+        async: true,
+        url: "<?php echo site_url('hr/employee/updateUserLevel'); ?>",
+        data: {	udata: d},
+		dataType: 'json',
+		cache: false,
+        success: function(data)
+        {
+			$('#processvalidation').hide();
+        	if(data)
+				toastr.success("SUCCESSFULLY UPATED USER LEVEL", "Success");
+			else
+    			console.log("USER LEVEL WAS NOT UPDATED", "INFO");
+
+        },
+        error: function(data)
+        {
+            toastr.error('PLEASE RELOAD THE PAGE AND TRY AGAIN.', 'OOOOOPHS! WE ENCOUNTERED A PROBLEM');
+        },
+        complete: function(c){
+        	// if(c.status==200)
+        }
+    })
+}
+
+function gdelete(tbl, col, id)
+{
+	$.ajax
+	({  type:"POST",
+	    async: true,
+	    url: "<?php echo site_url('common/delete'); ?>",
+	    data: {	tbl:tbl, col:col, id:id},
+		dataType: 'json',
+		cache: false,
+	    success: function(data)
+	    {
+	    	if(data)
+				console.log("DELETED", "SUCCESS");
+			else
+				console.log("DELETE ERROR", "ERROR");
+	    },
+	    error: function(data)
+	    {
+	        toastr.error('PLEASE RELOAD THE PAGE AND TRY AGAIN.', 'OOOOOPHS! WE ENCOUNTERED A PROBLEM')
+	    },
+        complete: function(c){
+        	if(c.status==200)
+				switch(col) {
+					case "holidays_id":
+						$('#calendar').fullCalendar( 'refetchEvents' );
+						break;
+				}
+				switch(tbl) {
+					case "wfh.report_history":
+						loadTables()
+						break;
+				}
+			return false;
+        }
+	})
+}
+
+function gdeac(tbl, col, id, cname)
+{
+	$.ajax
+	({  type:"POST",
+	    async: true,
+	    url: "<?php echo site_url('common/deac'); ?>",
+	    data: {	tbl:tbl, col:col, id:id, cname:cname},
+		dataType: 'json',
+		cache: false,
+	    success: function(data)
+	    {
+	    	/*if(data)
+				toastr.success("DELETED", "SUCCESS");
+			else
+				toastr.error("DELETE ERROR", "ERROR");*/
+	    },
+	    error: function(data)
+	    {
+	        toastr.error('PLEASE RELOAD THE PAGE AND TRY AGAIN.', 'OOOOOPHS! WE ENCOUNTERED A PROBLEM')
+	    },
+        complete: function(c){
+        }
+	})
+}
+
+function gexportExcel(tbl) {
+	var htmltable= document.getElementById(tbl);
+	var html = htmltable.outerHTML;
+	window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+}
+
+jQuery(function($) {
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"newestOnTop": true,
+		"progressBar": true,
+		"progressClass": "toast-progress",
+		"positionClass": "toast-top-full-width",
+		"showDuration": "1000",
+		// "preventDuplicates": true,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "8000",
+		"extendedTimeOut": "1000",
+		// "showEasing": "swing",
+		// "hideEasing": "linear",
+		"showEasing": "easeOutBounce",
+		"hideEasing": "easeInBack",
+		"closeEasing ": "easeInBack",
+		"showMethod": "slideDown",
+		"hideMethod": "slideUp"
+		// "showMethod": "fadeIn",
+		// "hideMethod": "fadeOut"
+	}
+
+	$('.mail').on("input", function(event) {
+	    var ar = /^[ A-Za-z0-9-_.]*$/;
+		if (ar.test(this.value) == false) {
+			event.preventDefault();
+			$('span.mail').text('Please input a valid email.');
+			$(this).val(this.value.replace(event.originalEvent.data, ''));
+    		return false;
+		}else $('span.mail').text('');
+	});
+
+	$("input[type=password]").focus(function() {
+		$(this).select();
+	});
+
+	$('.btnNext').on("click", function(e) {
+		e.preventDefault();
+		$(this).closest("form").prop('id', 'form_sample_2')
+		if($("#form_sample_2").valid())
+			nextForm(2)
+		else
+			return;
+	});
+
+	$(document).on('keydown',function(e){
+		if(allowArrowKeys){
+			if ((e.keyCode || e.which) == 37){
+				try{
+					$('#btnPrev').click();
+				} catch(err)
+				{console.log(err)}
+			}
+			if ((e.keyCode || e.which) == 39){
+				try{
+					$('#btnNext').click();
+				} catch(err)
+				{console.log(err)}
+			}
+		}
+	});
+})
+</script>
+
+<!-- Header JS -->
+<script type="text/javascript">
+	$('#password').keyup(function() {
+		$('#passresult').html(checkStrength($('#password').val()))
+	})
+
+	function gbtnsubmitP(){
+	    if($("#password").val())
+	    {
+	        // $('.spnocassion').addClass("hidden");
+	        updatePass('update', $('#password').val(), 0, "<?php echo $this->session->userdata('empid');?>");
+	        $('#mchangepass').modal('hide');
+	    }//else
+	        //$('.spnocassion').removeClass("hidden");
+	}
+
+	$(document).on('keydown, keyup', '#uFeedback', function() {
+	    if($("#uFeedback").val())
+			$("#gbtnsubmitF").removeClass('hidden');
+	    else
+			$("#gbtnsubmitF").addClass('hidden');
+	});
+
+	function gbtnsubmitF(){
+    	var fdata = {	employee_employee_id:"<?php echo $this->session->userdata('empid');?>",
+						feed:$("#uFeedback").val()
+					};
+		aCall("ADDED", "FEEDBACK", "infosys.feedback", "", "", fdata, "<?php echo site_url('common/add'); ?>");
+		$('#mfeeds').modal('hide');
+	}
+
+	function checkStrength(password) {
+		var strength = 0
+		// if (password.length < 4) {
+		// 	$('#result').removeClass()
+		// 	$('#result').addClass('short')
+		// 	return ''
+		// }
+		if (password.length > 4) strength += 1
+		// If password contains both lower and uppercase characters, increase strength value.
+		if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+		// If it has numbers and characters, increase strength value.
+		if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+		// If it has one special character, increase strength value.
+		if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+		// If it has two special characters, increase strength value.
+		if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+		// Calculated strength value, we can return messages
+		// If value is less than 2
+		$("#passresult").removeClass();
+		if (strength < 2) {
+			$("#passresult").addClass("font-red")
+			return 'Weak'
+		} else if (strength == 2) {
+			$("#passresult").addClass("font-blue")
+			return 'Good'
+		} else {
+			$("#passresult").addClass("font-green")
+			return 'Strong'
+		}
+	}
+</script>
+
+<!-- Calendar JS -->
+<script type="text/javascript">
+function clearCalendar(){
+    $('.spnocassion').addClass("hidden");
+    $('#hDate').text("");
+    $('#hid').val("");
+    $('#holidays_ref_id').val(1);
+    $('#sdate').val("");
+    $('#occasion').val("");
+    $('#repeats').val(0);
+    $('select').select2();
+}
+
+jQuery(document).ready(function() {
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+		onConfirm: function() {
+			alert("2");
+			$('[data-toggle=confirmation]').confirmation('hide');
+		},
+		popout: true
+	});
+
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek,basicDay'
+        },
+        editable: true, disableDragging: true, disableResizing: true,
+        viewDisplay: function(v) {
+            console.log("calendar viewDisplay")
+            /*$('#yPick option:contains('+v.start.getFullYear()+')').attr("selected", true);
+            $('#mPick option[value='+v.start.getMonth()+']').attr("selected", true);*/
+        },
+        events: function(start, end, callback) {
+            // do some asynchronous ajax
+            $.getJSON("<?php echo base_url('hr/Calendar/getHolidaysold'); ?>",
+                {
+                    start: start.getTime(),
+                    end: end.getTime(),
+                    action: "calendarData"
+                },
+                function(events) {
+                    callback(events);
+                });
+        },
+        eventDrop: function(event, delta) {
+            alert(event.title + ' was moved ' + delta + ' days\n' +
+                '(should probably update your database)');
+        },
+        loading: function(bool) {
+            console.log("calendar loading")
+            /*if (bool){ $('#cover').show(); $('#loading').show() }
+            else { $('#loading').hide(); $('#cover').hide(); }*/
+        },
+        dayClick: function(day, view){
+	        console.log("calendar dayClick")
+			if(myroles.includes("9")){
+	            clearCalendar()
+	            // console.log(yourDate.toISOString().split('T')[0])
+	            $('.gbtndeleteH').addClass('hidden');
+	            $('#mHoliday').modal('hide');
+	            $('#mHoliday').modal('show');
+
+	            var yourDate = day;
+	            const offset = yourDate.getTimezoneOffset();
+	            yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+	            $('#sdate').val(yourDate.toISOString().split('T')[0]);
+	            $('#hDate').text(day.toDateString());
+			}
+        },
+        eventClick: function(i, e, view){
+            console.log("calendar eventClick")
+			if(myroles.includes("9")){
+	            $('.gbtndeleteH').removeClass('hidden');
+	            clearCalendar()
+	            $('#mHoliday').modal('hide');
+	            $('#mHoliday').modal('show');
+
+	            $('.spnocassion').addClass("hidden");
+
+	            var yourDate = i.start;
+	            const offset = yourDate.getTimezoneOffset();
+	            yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+	            $('#sdate').val(yourDate.toISOString().split('T')[0]);
+
+	            $('#hDate').text(i.start.toDateString());
+	            $('#hid').val(i.id);
+	            $('#holidays_ref_id').val(i.type);
+	            $('#occasion').val(i.title);
+	            $('#repeats').val(i.repeats);
+	            $('select').select2();
+	        }
+        }
+    });
+});
+
+function gbtndeleteH(){
+	var x = confirm("Are you sure?");
+	if(x)
+		gdelete("infosys.holidays", "holidays_id", $("#hid").val())
+    $('#mHoliday').modal('hide');
+}
+
+function gbtnsubmitH(){
+    if($("#occasion").val())
+    {
+        $('.spnocassion').addClass("hidden");
+        var hurl = "<?php echo site_url('common/add'); ?>";
+        var a = "ADDED";
+        if($("#hid").val()){
+            hurl = "<?php echo site_url('common/update'); ?>";
+            a = "UPDATED";
+        }
+        var hdata = {   holidays_ref_id:$("#holidays_ref_id").val(),
+                        sdate:$("#sdate").val(),
+                        edate:$("#sdate").val(),
+                        occasion:$("#occasion").val(),
+                        repeats:$("#repeats").val()
+                    };
+        aCall(a, "HOLIDAYS & SUSPENSIONS", "infosys.holidays", "holidays_id", $("#hid").val(), hdata, hurl);
+        $('#mHoliday').modal('hide');
+    }else
+        $('.spnocassion').removeClass("hidden");
+}
+
+function exportPDS(id)
+{
+	toastr.warning("Please complete your profile before exporting PDS", "REMINDER");
+	var URL = "<?php echo base_url();?>hr/Employee/exportPDS/"+id+"/";
+	var win = window.open(URL, 'Print Monthly Report','');
+}
+
+
+function deleteLeave(id){
+  var r = confirm("Are you sure you want to delete this leave application?");
+  if (r == true) {
+    $.ajax({ type:"POST",
+      async: true,
+      url:"<?php echo site_url('hr/Leave/deleteLeave'); ?>",
+      dataType: 'json',
+      data:{id: id},
+      cache: false,
+      success: function(data){
+        getLeaves()
+        toastr.success("Successfully deleted leave application", "Success");
+      }
+    });
+  }
+}
+
+function cancelLeave(id){
+  var r = confirm("Are you sure you want to cancel approval of this leave application?");
+  if (r == true) {
+    $.ajax({ type:"POST",
+      async: true,
+      url:"<?php echo site_url('hr/Leave/cancelLeave'); ?>",
+      dataType: 'json',
+      data:{id: id},
+      cache: false,
+      success: function(data){
+        getLeaves()
+        toastr.success("Successfully cancelled approval of leave application", "Success");
+      }
+    });
+  }
+}
+</script>
