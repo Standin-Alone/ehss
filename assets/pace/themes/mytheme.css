@@ -1,0 +1,37 @@
+/* This is a compiled file, you should be editing the file in the templates directory */
+#myoverlay {
+  position: fixed !important;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 10 !important;
+  height: 100% !important;
+  width: 100% !important;
+  /*opacity: 0.9 !important;*/ /* also -moz-opacity, etc. */
+  background-color: rgba(0,0,0,0.1) !important;
+  background-image: url("loading.gif");
+}
+
+.pace.pace-inactive {
+  display: none;
+}
+
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  z-index: 2000;
+  position: fixed;
+  height: 60px !important;
+  width: 60px !important;
+  content: "Loading... ";
+  color: white;
+  background-image: url("loading.gif");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+}
+
+

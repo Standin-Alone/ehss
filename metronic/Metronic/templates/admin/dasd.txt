@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
+Version: 1.5.2
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+   <meta charset="utf-8" />
+   <title> RPTIS | Transaction | Transaction Tracker </title>
+  <%@include file="../header.jsp"%>
+   <%@include file="../connection.jsp"%>
+  <%@ page import ="java.sql.*" %>
+
+<%
+    if (request.getParameter("submit")!=null)
+    {
+      String ide=request.getParameter("trans_id");
+      int num=Integer.parseInt(ide);
+    
+      String pinNo = request.getParameter("pinNo");
+      String dateReceived = request.getParameter("dateReceived"); 
+      String dateApproved = request.getParameter("dateApproved"); 
+    
+      try{
+        
+        String equery = "UPDATE RPT_t_TransactionTracker set trs_Type=? where trs_PinNo='"+pinNo+"' AND trs_Status = 'For Receiving'";
+        ps = connection.prepareStatement(equery);
+         
+          ps.setString(1, pinNo);
+          ps.setString(2, "Tax Mapping");
+
+          int i =  ps.executeUpdate();
+          request.getSession().setAttribute("message", message_updated); %>
+          <script type='text/javascript'>                
+            window.location = 't_PropertyApproval.jsp';
+          </script> <% 
+         
+         
+      }
+      catch(Exception e){
+        String ex = e.toString();
+        request.getSession().setAttribute("message", message_error);      %>      
+                    <script type='text/javascript'>                
+                    window.location = 't_PropertyApproval.jsp';
+                    </script>
+         <%   }
+      
+
+
+      try{
+        PreparedStatement ps2 = null;
+        String equery2 = "UPDATE [rpt_t_TransferOwnership] SET tra_Status =? where pin_no='"+pinNo+"' AND trs_Status = 'For Receiving'";
+          ps2 = connection.prepareStatement(equery2);
+         
+          ps2.setString(1, "Tax Mapping");
+
+          int i2 =  ps2.executeUpdate();
+
+          request.getSession().setAttribute("message", message_updated); %>
+          <script type='text/javascript'>                
+            window.location = 't_PropertyApproval.jsp';
+          </script> <% 
+         
+         
+      }
+      catch(Exception e){
+        String ex = e.toString();
+        request.getSession().setAttribute("message", message_error);      %>      
+                    <script type='text/javascript'>                
+                    window.location = 't_PropertyApproval.jsp';
+                    </script>
+         <%   }
+      }
+    } 
+%>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<%@include file="../body.jsp"%>
+   <%@include file="../menu.jsp"%>
+            <%@include file="../theme.jsp"%>
+<!-- END BEGIN STYLE CUSTOMIZER -->  
+ <!-- BEGIN PAGE HEADER-->
+         <div class="row">
+            <div class="col-md-12">
+               <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+               <h3 class="page-title">
+                Transaction Tracker
+               </h3>
+               <ul class="page-breadcrumb breadcrumb">
+                  <li>
+                     <i class="icon-home"></i>
+                     <a href="../others/home.jsp">Home</a> 
+                     <i class="icon-angle-right"></i>
+                  </li>
+                  <li>
+                    <a href="#">Transaction</a>
+                    <i class="icon-angle-right"></i>
+                  </li>
+                  <li>
+                    <a href="t_TransactionTracker.jsp">Transaction Tracker</a>
+                  </li>
+                  <li class="pull-right">
+                     <div id="" class="" data-placement="top" >
+                        <i class="icon-calendar" style="color: red"></i>
+                        <span></span>
+                        <strong><font color="red">&nbsp;&nbsp;               
+                          <%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*, java.text.*;" errorPage="" %>
+                                 <% 
+                                    java.util.Locale locale = request.getLocale();
+                              DateFormat tipe = new SimpleDateFormat("MMMM dd, yyyy");
+                                  Calendar cal = Calendar.getInstance();
+                          %>
+                          <% out.print(tipe.format(cal.getTime()));%>
+                          </font></strong>
+                     </div>
+                  </li>
+               </ul>
+               <!-- END PAGE TITLE & BREADCRUMB-->
+            </div>
+         </div>
+         <!-- END PAGE HEADER-->
+         <!-- BEGIN PAGE CONTENT-->
+         <div class="row">
+            <div class="col-md-12">
+               <div class="tab-pane " id="tab_2">
+                        <div class="portlet box green">
+                           <div class="portlet-title">
+                              <div class="caption"><i class="icon-edit"></i>Edit Transaction Tracker Level</div>
+                              <div class="tools">
+                                 <a href="javascript:;" class="collapse"></a>
+                                 <a href="javascript:;" class="reload"></a>
+                              </div>
+                           </div>
+                           <div class="portlet-body form">
+                            <!-- BEGIN FORM-->
+                              <form action="t_edit_transaction_tracker.jsp" method="post" class="form-horizontal">
+                                 <div class="form-body">
+                                    
+                                    <h3 class="form-section">Transaction Tracker Information</h3>
+                                    <!--/row-->                   
+                                    <%
+                                      String id=request.getParameter("id"); String own="";
+                                      try 
+                                        {
+
+                                          String query = "SELECT * FROM RPT_t_PropertyApproval WHERE app_id = '"+id+"'";
+                                          
+                                          ResultSet rs = st.executeQuery(query);
+                                          while(rs.next()) 
+                                              { own = rs.getString("own_id");
+                                              %>       
+                                                <!--/row-->
+                                              
+                                                   <div class="row">
+                                                     <div class="col-md-12">
+                                                        <div class="form-group">
+                                                           <label class="control-label col-md-3">Pin Number</label>
+                                                           <div class="col-md-6">
+                                                               <input type="text" class="form-control" name="pinNo" onkeypress="return inputOnlyNumbers(this.id)" value="<%=rs.getString("app_pin_no")%>" required> 
+                                                           </div>
+                                                        </div>
+                                                     </div>
+                                                     <!--/span-->
+                                                     
+                                                     <!--/span-->
+                                                  </div>
+                                                  <!--/row-->
+                                              
+
+                                                  <div class="row">
+                                                     <div class="col-md-12">
+                                                        <div class="form-group">
+                                                           <label class="control-label col-md-3">Date Received</label>
+                                                           <div class="col-md-6">
+                                                               <input type="date" class="form-control" name="dateReceived" onkeypress="return inputOnlyNumbers(this.id)" value="<%=rs.getString("trs_DateProcessed")%>" required> 
+                                                           </div>
+                                                        </div>
+                                                     </div>
+                                                     <!--/span-->
+                                                     
+                                                     <!--/span-->
+                                                  </div>
+                                                  <!--/row-->
+
+                                                  <div class="row">
+                                                     <div class="col-md-12">
+                                                        <div class="form-group">
+                                                           <label class="control-label col-md-3">Date Approved</label>
+                                                           <div class="col-md-6">
+                                                               <input type="date" class="form-control" name="dateApproved" onkeypress="return inputOnlyNumbers(this.id)" value="<%=rs.getString("trs_DateProcessed")%>" required> 
+                                                           </div>
+                                                        </div>
+                                                     </div>
+                                                     <!--/span-->
+                                                     
+                                                     <!--/span-->
+                                                  </div>
+                                                  <!--/row-->
+                                                    
+                                                  
+                                                    
+                                                    <div class="row">
+                                                       <div class="col-md-12">
+                                                          <input type="hidden" name="trans_id" class="form-control" value= <%out.write(id);%>>
+                                                       </div>
+                                                       <!--/span-->
+                                                       
+                                                       <!--/span-->
+                                                    </div>
+                                                 </div>
+                                                <%
+                                              }
+                                        } 
+                                      catch(Exception e)
+                                        {
+
+                                        }
+                                        %>                             
+                                  <div class="form-actions right">
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                        <div class="col-md-offset-3 col-md-9">
+                                           <button type="reset" class="btn dark">Reset</button>
+                                             <button type="submit" name="submit" class="btn green">Submit</button>
+                                             <button type="button" class="btn red" onclick="location.href='t_TransactionTracker.jsp';">Cancel</button>                              
+                                          </div>
+                                         
+                                       </div>
+                                    </div>
+                                 </div>
+                                  
+                              </form>
+                              <!-- END FORM-->                
+                           </div>
+                        </div>
+                     </div>
+         </div>
+         <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+   <%@include file="../footer.jsp"%>
+   <!-- BEGIN PAGE LEVEL SCRIPTS -->
+  
+</body>
+<!-- END BODY -->
